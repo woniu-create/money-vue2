@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component,Prop} from 'vue-property-decorator';
+import {Component,Prop,Watch} from 'vue-property-decorator';
 @Component
 export default class Types extends Vue {
     @Prop(Number) readonly xxx: number | undefined
@@ -20,8 +20,9 @@ export default class Types extends Vue {
       }
       this.type=type
     }
-    mounted() {
-     console.log(this.xxx);
+    @Watch('type')
+    onTypeChanged(value: string){
+      this.$emit('update:value',value)
     }
 }
 </script>
