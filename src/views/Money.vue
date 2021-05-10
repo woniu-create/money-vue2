@@ -1,68 +1,64 @@
+/* eslint-disable no-undef */
 <template>
   <Layout class-prefix="layout">
-    {{ recordList }}
-    <!-- <NumberPad :value="record.amount" @update:value="record.amount=$event"/>
-    <Types :value="record.type" @update:value="record.type=$event"/> -->
-    <NumberPad :value.sync="record.amount" @submit="saveRecord" />
-    <Types :value.sync="record.type" />
-    <Notes @update:value="onUpdateNotes" />
-    <Tags :data-source.sync="tags" @update:value="onUpdateTags" />
+    <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
+    <Types :value.sync="record.type"/>
+    <Notes @update:value="onUpdateNotes"/>
+    <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
   </Layout>
 </template>
 
 <script lang="ts">
-import NumberPad from "@/components/Money/NumberPad.vue";
-import Types from "@/components/Money/Types.vue";
-import Notes from "@/components/Money/Notes.vue";
-import Tags from "@/components/Money/Tags.vue";
-import Vue from "vue";
-import { Component, Watch } from "vue-property-decorator";
+  import Vue from 'vue';
+  import NumberPad from '@/components/Money/NumberPad.vue';
+  import Types from '@/components/Money/Types.vue';
+  import Notes from '@/components/Money/Notes.vue';
+  import Tags from '@/components/Money/Tags.vue';
+  import {Component, Watch} from 'vue-property-decorator';
+  import model from '@/model';
 
-const recordList: Record[] = JSON.parse(window.localStorage.getItem('recordList')||'[]');
+  const recordList = model.fetch();
 
-type Record = {
-  tags: string[];
-  notes: string;
-  type: string;
-  amount: number;
-  createAt?: Date
-};
 
-@Component({
-  components: { NumberPad, Types, Notes, Tags },
-})
-export default class Money extends Vue {
-  tags = ["衣", "食", "住", "行"];
-  recordList: Record[] = recordList;
-  record: Record = {
-    tags: [],
-    notes: "",
-    type: "-",
-    amount: 0,
-  };
+  @Component({
+    components: {Tags, Notes, Types, NumberPad}
+  })
+  export default class Money extends Vue {
+    tags = ['衣', '食', '住', '行', '彩票'];
+    // eslint-disable-next-line no-undef
+    recordList: RecordItem[] = recordList;
+    // eslint-disable-next-line no-undef
+    record: RecordItem = {
+      tags: [], notes: '', type: '-', amount: 0
+    };
 
-  onUpdateTags(value: string[]) {
-    this.record.tags = value;
+    onUpdateTags(value: string[]) {
+      this.record.tags = value;
+    }
+
+    onUpdateNotes(value: string) {
+      this.record.notes = value;
+    }
+
+    saveRecord() {
+      // eslint-disable-next-line no-undef
+      const record2: RecordItem = model.clone(this.record);
+      record2.createdAt = new Date();
+      this.recordList.push(record2);
+    }
+
+    @Watch('recordList')
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    onRecordListChange() {
+      model.save(this.recordList);
+    }
   }
-  onUpdateNotes(value: string) {
-    this.record.notes = value;
-  }
-  saveRecord() {
-    const record2 = JSON.parse(JSON.stringify(this.record));
-    record2.createAt = new Date();
-    this.recordList.push(record2);
-  }
-  @Watch("recordList")
-  onRecordListChange() {
-    window.localStorage.setItem('recordList',JSON.stringify(this.recordList))
-  }
-}
 </script>
 
 <style lang="scss">
-.layout-content {
-  display: flex;
-  flex-direction: column-reverse;
-}
+  .layout-content {
+    display: flex;
+    flex-direction: column-reverse;
+  }
 </style>
-<style lang="scss" scoped></style>
+
