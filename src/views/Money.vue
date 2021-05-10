@@ -1,8 +1,10 @@
 <template>
   <Layout class-prefix="layout">
     {{record}}
-    <NumberPad :value="record.amount" @update:value="record.amount=$event"/>
-    <Types :value="record.type" @update:value="record.type=$event"/>
+    <!-- <NumberPad :value="record.amount" @update:value="record.amount=$event"/>
+    <Types :value="record.type" @update:value="record.type=$event"/> -->
+    <NumberPad :value.sync="record.amount"/>
+    <Types :value.sync="record.type"/>
     <Notes @update:value="onUpdateNotes"/>
     <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
   </Layout>
