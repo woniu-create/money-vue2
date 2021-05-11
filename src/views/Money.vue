@@ -49,15 +49,13 @@
 
     saveRecord() {
       // eslint-disable-next-line no-undef
-      const record2: RecordItem = recordListmodel.clone(this.record);
-      record2.createdAt = new Date();
-      this.recordList.push(record2);
+      recordListmodel.create(this.record);
     }
 
     @Watch('recordList')
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     onRecordListChange() {
-      recordListmodel.save(this.recordList);
+      recordListmodel.save();
     }
   }
 </script>
