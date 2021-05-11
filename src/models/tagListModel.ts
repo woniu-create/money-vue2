@@ -24,8 +24,8 @@ const tagListmodel: TagListmodel = {
      if(names.indexOf(name) >= 0) {return 'duplicated'}
        const id =createId().toString();
        this.data.push({id,name:name})
-       this.save();
-       return 'susscess'
+     this.save();
+     return 'susscess'
     },
     update(id,name){
         const idList = this.data.map(item => item.id);
