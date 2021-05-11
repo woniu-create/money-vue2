@@ -16,7 +16,6 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import tagListmodel from "@/models/tagListModel";
 import FormItem from "@/components/Money/FormItem.vue";
 import Button from "@/components/Button.vue";
 
@@ -24,28 +23,37 @@ import Button from "@/components/Button.vue";
   components: { Button, FormItem },
 })
 export default class EditLabel extends Vue {
-  tag?: {id:string,name:string} = undefined
+  // eslint-disable-next-line no-undef
+  tag?: Tag = undefined
   created() {
     //   console.log(this.$route.params);
-    const id = this.$route.params.id;
-    tagListmodel.fetch();
-    const tags = tagListmodel.data;
-    const tag = tags.filter((t) => t.id === id)[0];
-    if (tag) {
-      this.tag = tag
-    } else {
-      this.$router.replace("/404");
+    // const id = this.$route.params.id;
+    // tagListmodel.fetch();
+    // const tags = tagListmodel.data;
+    // const tag = tags.filter((t) => t.id === id)[0];
+    // if (tag) {
+    //   this.tag = tag
+    // } else {
+    //   this.$router.replace("/404");
+    // }
+    this.tag = window.findTag(this.$route.params.id);
+    if(!this.tag){
+      this.$router.replace('/404');
     }
   }
   update(name: string){
     if(this.tag){
-      tagListmodel.update(this.tag.id,name)
+      // tagListmodel.update(this.tag.id,name)
+      window.updateTag(this.tag.id,name);
     }
   }
   remove(){
     if(this.tag){
-      tagListmodel.remove(this.tag.id)
+      if(window.removeTag(this.tag.id)){
       this.$router.back();
+      }else{
+        window.alert('删除失败')
+      }
     }
   }
   goBack() {
