@@ -25,6 +25,7 @@ export default class Labels extends Vue{
   
   // TODO
   // tags = store.tagList;
+  tags =[]
   createTag() {
     const name = window.prompt('请输出标签名');
     if(name){
