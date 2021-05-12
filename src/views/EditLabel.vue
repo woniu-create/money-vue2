@@ -28,8 +28,6 @@ export default class EditLabel extends Vue {
     return this.$store.state.currentTag;
   }
   created() {
-    //TODO
-    // this.tag = store.findTag(this.$route.params.id);
     const id = this.$route.params.id;
     this.$store.commit('setCurrentTag',id); 
     if(!this.tag){
@@ -38,8 +36,9 @@ export default class EditLabel extends Vue {
   }
   update(name: string){
     if(this.tag){
-      //TODO
-      // store.updateTag(this.tag.id,name);
+      this.$store.commit('updateTag',{
+        id:this.tag.id,name 
+      })
     }
   }
   remove(){
@@ -52,6 +51,9 @@ export default class EditLabel extends Vue {
     //     window.alert('删除失败')
     //   }
     // }
+    if(this.tag){
+      this.$store.commit('removeTag',this.tag.id)
+    }
   }
   goBack() {
     console.log('back');
