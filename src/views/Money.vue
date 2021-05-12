@@ -10,7 +10,7 @@
            @update:value="onUpdateNotes"
       />
     </div>
-    <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+    <Tags/>
   </Layout>
 </template>
 
@@ -27,17 +27,12 @@
     components: {Tags, FormItem, Types, NumberPad}
   })
   export default class Money extends Vue {
-    tags = store.tagList 
     // eslint-disable-next-line no-undef
     recordList = store.recordList;
     // eslint-disable-next-line no-undef
     record: RecordItem = {
       tags: [], notes: '', type: '-', amount: 0
     };
-
-    onUpdateTags(value: string[]) {
-      this.record.tags = value;
-    }
 
     onUpdateNotes(value: string) {
       this.record.notes = value;
