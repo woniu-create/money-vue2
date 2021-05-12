@@ -1,11 +1,4 @@
-// import recordListModel from "@/models/recordListModel";
 import clone from '@/lib/clone';
-// export default {
-    // record store
-//   recordList: recordListModel.fetch(),
-//   createRecord: (record: RecordItem) => recordListModel.create(record),
-
-// }
 const localStorageKeyName = 'recordList';
 const recordStore = {
     recordList: [] as RecordItem[],
