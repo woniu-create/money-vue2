@@ -3,7 +3,6 @@
   <Layout class-prefix="layout">
     {{record}}
     <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
-    <!-- <Types :value.sync="record.type"/> -->
     <Tabs :dataSource="recordTypeList" :value.sync="record.type"/>
     <div class="notes">
     <FormItem field-name="备注"
@@ -26,7 +25,7 @@
   import recordTypeList from '@/constants/recordTypeList'
 
   @Component({
-    components: {Tabs,Tags, FormItem, Types, NumberPad},
+    components: {Tabs,Tags, FormItem, NumberPad},
   })
   export default class Money extends Vue {
     get recordList(){
