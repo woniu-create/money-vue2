@@ -1,8 +1,6 @@
 <template>
   <div>
     <ul class="tabs">
-      <!-- <li :class="value === '-' && 'selected'" @click="selectType('-')">支出</li>
-      <li :class="value === '+' && 'selected'" @click="selectType('+')">收入</li> -->
       <li v-for="item in dataSource" :key="item.value" :class="liClass(item)" @click="select(item)">{{item.text}}</li>
     </ul>
   </div>
